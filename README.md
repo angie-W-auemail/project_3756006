@@ -1,1 +1,1 @@
-#COSC 3756 Group project repository
+# COSC 3756 Group Project Repository
