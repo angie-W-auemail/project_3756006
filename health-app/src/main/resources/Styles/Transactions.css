@@ -1,0 +1,40 @@
+.transactions_container {
+    -fx-background-color: #ffffff;
+}
+
+.list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 8px;
+    -fx-padding: 10;
+}
+
+.list-view .list-cell {
+    -fx-padding: 10 5 10 5;
+    -fx-background-color: transparent;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #f5f5f5;
+}
+
+.list-view .scroll-bar:vertical {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dcdcdc;
+}
+
+.list-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #999999;
+    -fx-background-radius: 5em;
+}
+
+.list-view .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #666666;
+}
+
+.list-view .scroll-bar:vertical .increment-button,
+.list-view .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+}

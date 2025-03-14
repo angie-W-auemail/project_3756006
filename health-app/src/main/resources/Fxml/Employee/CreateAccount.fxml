@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="750.0" prefWidth="850.0" 
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.health.system.healthsystem.Controllers.Employee.CreateAccountController"
+            stylesheets="@../../Styles/CreateAccount.css">
+    
+    <fx:define>
+        <ToggleGroup fx:id="accountTypeGroup"/>
+    </fx:define>
+    
+    <VBox spacing="20" alignment="TOP_CENTER" layoutX="50" layoutY="30">
+        <Text text="Create New Customer Account" styleClass="title-text">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Text>
+        
+        <Label fx:id="employeeStatusLabel" styleClass="status-label"/>
+        
+        <VBox spacing="10" styleClass="form-section">
+            <Label text="Customer Information" styleClass="section-header"/>
+            <TextField fx:id="customerEmail" promptText="Email Address"/>
+        </VBox>
+        
+        <VBox spacing="10" styleClass="form-section">
+            <Label text="Account Type" styleClass="section-header"/>
+            <HBox spacing="20">
+                <RadioButton fx:id="savingsCheck" text="Savings Account" 
+                           toggleGroup="$accountTypeGroup"/>
+                <RadioButton fx:id="checkingCheck" text="Checking Account" 
+                           toggleGroup="$accountTypeGroup"/>
+            </HBox>
+        </VBox>
+        
+        <VBox spacing="10" styleClass="form-section">
+            <Label text="Initial Deposit" styleClass="section-header"/>
+            <TextField fx:id="initialDeposit" promptText="Enter amount"/>
+        </VBox>
+        
+        <HBox spacing="20" alignment="CENTER">
+            <Button fx:id="createBtn" text="Create Account" 
+                    onAction="#handleCreateAccount" styleClass="create-button"/>
+            <Button fx:id="clearBtn" text="Clear Form" 
+                    onAction="#handleClearForm" styleClass="clear-button"/>
+        </HBox>
+        
+        <Label fx:id="messageLabel" styleClass="message-label"/>
+    </VBox>
+</AnchorPane>
