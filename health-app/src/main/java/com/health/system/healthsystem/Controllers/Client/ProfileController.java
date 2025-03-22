@@ -2,6 +2,8 @@ package com.health.system.healthsystem.Controllers.Client;
 
 import com.health.system.healthsystem.Models.DatabaseConnection;
 import com.health.system.healthsystem.Models.Model;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -15,11 +17,18 @@ import java.util.ResourceBundle;
 
 public class ProfileController implements Initializable {
     @FXML private TextField usernameField;
+    @FXML private TextField role_fld;
+    @FXML private TextField weight_fld;
+    @FXML private TextField height_fld;
     @FXML private TextField emailField;
     @FXML private PasswordField currentPasswordField;
     @FXML private PasswordField newPasswordField;
     @FXML private PasswordField confirmPasswordField;
     @FXML private Label messageLabel;
+    @FXML private RadioButton male_radio;
+    @FXML private RadioButton female_radio;
+    @FXML private ToggleGroup genderGroup;
+    @FXML private ComboBox<String> trainer_selector;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -28,14 +37,36 @@ public class ProfileController implements Initializable {
 
     private void loadUserData() {
         try (Connection conn = DatabaseConnection.connect()) {
-            String sql = "SELECT username, email FROM users WHERE email = ?";
+            String sql = "SELECT username, email, weight, height, gender,  trainerID, role FROM users WHERE email = ?";
+            String sql_trainers = "SELECT email from users where role = 'Trainer'";
             PreparedStatement pstmt = conn.prepareStatement(sql);
+            PreparedStatement tstmt = conn.prepareStatement(sql_trainers);
             pstmt.setString(1, Model.getInstance().getCurrentUserEmail());
             ResultSet rs = pstmt.executeQuery();
+            ResultSet ts=tstmt.executeQuery();
 
             if (rs.next()) {
+
                 usernameField.setText(rs.getString("username"));
                 emailField.setText(rs.getString("email"));
+                role_fld.setText(rs.getString("role"));
+                weight_fld.setText(rs.getString("weight"));
+                height_fld.setText(rs.getString("height"));
+                genderGroup = new ToggleGroup();
+                male_radio.setToggleGroup(genderGroup);
+                female_radio.setToggleGroup(genderGroup);
+                if (rs.getString("gender").equals("Male")) {
+                    male_radio.setSelected(true);
+                }
+                else{
+                    female_radio.setSelected(true);
+                }
+                ObservableList<String> trainers = FXCollections.observableArrayList();
+                while (ts.next()) {
+                    trainers.add(ts.getString("username"));
+                }
+                trainer_selector.setItems(trainers);
+
             }
         } catch (SQLException e) {
             showMessage("Error loading user data", false);

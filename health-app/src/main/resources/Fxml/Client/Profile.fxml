@@ -8,43 +8,74 @@
 <AnchorPane prefHeight="750.0" prefWidth="850.0" stylesheets="@../../Styles/Profile.css"
             xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.health.system.healthsystem.Controllers.Client.ProfileController">
-    
-    <VBox spacing="20" styleClass="profile-container">
+
+    <VBox spacing="20" styleClass="profile-container" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
         <Text text="Personal Profile" styleClass="title-text"/>
-        
-        <VBox styleClass="section-container">
+
+        <!-- Personal Details Section -->
+        <VBox styleClass="section-container" spacing="10">
             <Label text="Personal Details" styleClass="section-header"/>
             <GridPane vgap="10" hgap="10">
-                <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <TextField fx:id="usernameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                
-                <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <TextField fx:id="emailField" GridPane.rowIndex="1" GridPane.columnIndex="1" disable="true"/>
-                
-                <Button fx:id="updateDetailsBtn" text="Update Details" 
-                        onAction="#handleUpdateDetails" 
-                        GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <!-- Row 0: Role -->
+                <Label text="Role:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="role_fld" styleClass="input_field" editable="false" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200"/>
+
+                <!-- Row 1: Username -->
+                <Label text="Username:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="usernameField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200"/>
+
+                <!-- Row 2: Email -->
+                <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="emailField" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="200" disable="true"/>
+
+                <!-- Row 3: Weight -->
+                <Label text="Weight (kg):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="weight_fld" styleClass="input_field" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="200"/>
+
+                <!-- Row 4: Height -->
+                <Label text="Height (cm):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="height_fld" styleClass="input_field" GridPane.rowIndex="4" GridPane.columnIndex="1" prefWidth="200"/>
+
+                <!-- Row 5: Gender -->
+                <Label text="Gender:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <HBox spacing="10" GridPane.rowIndex="5" GridPane.columnIndex="1">
+                    <RadioButton fx:id="male_radio" text="Male" toggleGroup="$genderGroup"/>
+                    <RadioButton fx:id="female_radio" text="Female" toggleGroup="$genderGroup"/>
+                </HBox>
+
+                <!-- Row 6: Trainer -->
+                <Label text="Select Trainer:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="trainer_selector" prefWidth="200" styleClass="account_selector" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                <!-- Row 7: Update Button -->
+                <Button fx:id="updateDetailsBtn" text="Update Details" onAction="#handleUpdateDetails"
+                        GridPane.rowIndex="7" GridPane.columnIndex="1" prefWidth="200"/>
             </GridPane>
         </VBox>
-        
-        <VBox styleClass="section-container">
+
+        <!-- Change Password Section -->
+        <VBox styleClass="section-container" spacing="10">
             <Label text="Change Password" styleClass="section-header"/>
             <GridPane vgap="10" hgap="10">
+                <!-- Row 0: Current Password -->
                 <Label text="Current Password:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <PasswordField fx:id="currentPasswordField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                
+                <PasswordField fx:id="currentPasswordField" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200"/>
+
+                <!-- Row 1: New Password -->
                 <Label text="New Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <PasswordField fx:id="newPasswordField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-                
+                <PasswordField fx:id="newPasswordField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200"/>
+
+                <!-- Row 2: Confirm Password -->
                 <Label text="Confirm Password:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <PasswordField fx:id="confirmPasswordField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                
-                <Button fx:id="changePasswordBtn" text="Change Password" 
-                        onAction="#handleChangePassword" 
-                        GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <PasswordField fx:id="confirmPasswordField" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="200"/>
+
+                <!-- Row 3: Change Password Button -->
+                <Button fx:id="changePasswordBtn" text="Change Password" onAction="#handleChangePassword"
+                        GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="200"/>
             </GridPane>
         </VBox>
-        
+
+        <!-- Message Label -->
         <Label fx:id="messageLabel" styleClass="message-label"/>
     </VBox>
 </AnchorPane>
