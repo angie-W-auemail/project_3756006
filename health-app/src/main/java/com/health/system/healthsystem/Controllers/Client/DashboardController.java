@@ -26,14 +26,8 @@ public class DashboardController implements Initializable {
     public Text user_name;
     public Label signin_date;
     public Label checking_bal;
-    public Label checking_acc_num;
-    public Label savings_bal;
-    public Label savings_acc_num;
-    public Text income_lbl;
-    public Text expense_lbl;
+//    public Label savings_bal;
     public ListView transaction_listview;
-    public TextField etrans_fld;
-    public TextField amount_fld;
     //public TextField message_fld;
     public Button send_money_btn;
 
@@ -41,7 +35,7 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadAccountData();
+//        loadAccountData();
 
         updateDateTime();
 
@@ -51,13 +45,13 @@ public class DashboardController implements Initializable {
         loadIncomeExpenseSummary();
         Model.getInstance().getViewFactory().getClientSelectedMenuItem().addListener((observable, oldValue, newValue) -> {
                     if (newValue == ClientMenuOptions.DASHBOARD) {
-                        loadAccountData();
+//                        loadAccountData();
                         loadIncomeExpenseSummary();
 
                     }
                 });
 
-        send_money_btn.setOnAction(event -> handleSendMoney());
+        //send_money_btn.setOnAction(event -> handleSendMoney());
     }
 
     private void updateDateTime() {
@@ -87,52 +81,46 @@ public class DashboardController implements Initializable {
         }
     }
 
-    private void loadAccountData() {
-        try (Connection conn = DatabaseConnection.connect()) {
-            String currentEmail = getCurrentUserEmail();
-            
-            String userIdSql = "SELECT user_id FROM users WHERE email = ?";
-            PreparedStatement userStmt = conn.prepareStatement(userIdSql);
-            userStmt.setString(1, currentEmail);
-            ResultSet userRs = userStmt.executeQuery();
-
-            if (!userRs.next()) {
-                return;
-            }
-
-            int userId = userRs.getInt("user_id");
-            
-            String sql = "SELECT account_type, account_number, balance, created_at FROM accounts WHERE customer_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, userId);
-            ResultSet rs = pstmt.executeQuery();
-
-            checking_bal.setText("No Account");
-            savings_bal.setText("No Account");
-            checking_acc_num.setText("****");
-            savings_acc_num.setText("****");
-
-            while (rs.next()) {
-                String accountType = rs.getString("account_type");
-                String accountNumber = rs.getString("account_number");
-                double balance = rs.getDouble("balance");
-
-                if ("CHECKING".equals(accountType)) {
-                    checking_acc_num.setText(accountNumber.substring(accountNumber.length() - 4));
-                    checking_bal.setText(String.format("$%.2f", balance));
-                } else if ("SAVINGS".equals(accountType)) {
-                    savings_acc_num.setText(accountNumber.substring(accountNumber.length() - 4));
-                    savings_bal.setText(String.format("$%.2f", balance));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            checking_bal.setText("Error");
-            savings_bal.setText("Error");
-            checking_acc_num.setText("****");
-            savings_acc_num.setText("****");
-        }
-    }
+//    private void loadAccountData() {
+//        try (Connection conn = DatabaseConnection.connect()) {
+//            String currentEmail = getCurrentUserEmail();
+//
+//            String userIdSql = "SELECT user_id FROM users WHERE email = ?";
+//            PreparedStatement userStmt = conn.prepareStatement(userIdSql);
+//            userStmt.setString(1, currentEmail);
+//            ResultSet userRs = userStmt.executeQuery();
+//
+//            if (!userRs.next()) {
+//                return;
+//            }
+//
+//            int userId = userRs.getInt("user_id");
+//
+//            String sql = "SELECT account_type, account_number, balance, created_at FROM accounts WHERE customer_id = ?";
+//            PreparedStatement pstmt = conn.prepareStatement(sql);
+//            pstmt.setInt(1, userId);
+//            ResultSet rs = pstmt.executeQuery();
+//
+//            checking_bal.setText("No Account");
+//            savings_bal.setText("No Account");
+//
+//            while (rs.next()) {
+//                String accountType = rs.getString("account_type");
+//                String accountNumber = rs.getString("account_number");
+//                double balance = rs.getDouble("balance");
+//
+//                if ("CHECKING".equals(accountType)) {
+//                    checking_bal.setText(String.format("$%.2f", balance));
+//                } else if ("SAVINGS".equals(accountType)) {
+//                    savings_bal.setText(String.format("$%.2f", balance));
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            checking_bal.setText("Error");
+//            savings_bal.setText("Error");
+//        }
+//    }
 
     private String getCurrentUserEmail() {
         return Model.getInstance().getCurrentUserEmail();
@@ -162,7 +150,7 @@ public class DashboardController implements Initializable {
 
         if (incomeRs.next()) {
             double income = incomeRs.getDouble("total");
-            income_lbl.setText(String.format("+ $%.2f", income));
+
         }
 
         String expenseSql = "SELECT COALESCE(SUM(ABS(amount)), 0) as total FROM transactions t " +
@@ -174,7 +162,7 @@ public class DashboardController implements Initializable {
 
         if (expenseRs.next()) {
             double expense = expenseRs.getDouble("total");
-            expense_lbl.setText(String.format("- $%.2f", expense));
+
         }
     }
 
@@ -183,8 +171,8 @@ public class DashboardController implements Initializable {
             loadIncomeExpenseSummary(conn);
         } catch (SQLException e) {
             e.printStackTrace();
-            income_lbl.setText("+ $0.00");
-            expense_lbl.setText("- $0.00");
+
+
         }
     }
 
@@ -239,83 +227,6 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
-    private void handleSendMoney() {
-        String receiverEmail = etrans_fld.getText().trim();
-        String amountStr = amount_fld.getText().trim();
-        String message = "";//message_fld.getText().trim();
-
-        if (receiverEmail.isEmpty() || amountStr.isEmpty()) {
-            showAlert("Error", "Please fill in the recipient's email and amount");
-            return;
-        }
-
-        try {
-            double amount = Double.parseDouble(amountStr);
-            if (amount <= 0) {
-                showAlert("Error", "Please enter a valid amount");
-                return;
-            }
-
-            processSendMoney(receiverEmail, amount, message);
-
-        } catch (NumberFormatException e) {
-            showAlert("Error", "Please enter a valid amount");
-        }
-    }
-
-    private void processSendMoney(String receiverEmail, double amount, String message) {
-        if (receiverEmail.equals(getCurrentUserEmail())) {
-            showAlert("Error", "You cannot send money to yourself");
-            return;
-        }
-
-        try (Connection conn = DatabaseConnection.connect()) {
-            conn.setAutoCommit(false);
-            try {
-                if (!validateReceiver(conn, receiverEmail)) {
-                    showAlert("Error", "Receiver does not exist");
-                    return;
-                }
-
-                int senderId = getUserId(conn, getCurrentUserEmail());
-                int senderAccountId = getCheckingAccountId(conn, senderId);
-                double senderBalance = getAccountBalance(conn, senderAccountId);
-
-                if (senderBalance < amount) {
-                    showAlert("Error", "Insufficient balance in your checking account");
-                    return;
-                }
-
-                int receiverId = getUserId(conn, receiverEmail);
-                int receiverAccountId = getCheckingAccountId(conn, receiverId);
-
-                updateBalance(conn, senderAccountId, -amount);
-                updateBalance(conn, receiverAccountId, amount);
-
-                recordTransaction(conn, senderAccountId, "SEND", -amount,
-                        "Send to: " + receiverEmail + (message.isEmpty() ? "" : " - " + message));
-                recordTransaction(conn, receiverAccountId, "RECEIVE", amount,
-                        "Received from: " + getCurrentUserEmail());
-
-                conn.commit();
-
-                clearSendMoneyFields();
-                loadAccountData();
-                loadTransactionHistory();
-                loadIncomeExpenseSummary();
-
-                showAlert("Success", "Transfer successful");
-
-            } catch (Exception e) {
-                conn.rollback();
-                showAlert("Error", "Transfer failed: " + e.getMessage());
-                e.printStackTrace();
-            }
-        } catch (SQLException e) {
-            showAlert("Error", "Database connection failed");
-            e.printStackTrace();
-        }
-    }
 
     private boolean validateReceiver(Connection conn, String email) throws SQLException {
         String sql = "SELECT COUNT(*) FROM users WHERE email = ? AND role = 'CLIENT'";
@@ -381,12 +292,6 @@ public class DashboardController implements Initializable {
             pstmt.setString(4, description);
             pstmt.executeUpdate();
         }
-    }
-
-    private void clearSendMoneyFields() {
-        etrans_fld.clear();
-        amount_fld.clear();
-        //message_fld.clear();
     }
 
     private void showAlert(String title, String content) {
