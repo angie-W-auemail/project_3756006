@@ -1,5 +1,5 @@
 .main_menu_container {
-    -fx-background-color: #2C3E50;
+    -fx-background-color: lightblue;
     -fx-border-color: #D6DBDF;
     -fx-border-width: 1;
     -fx-border-radius: 8;
@@ -20,14 +20,14 @@
 }
 
 .title_container FontAwesomeIconView {
-    -fx-fill: #F1C40F;
+    -fx-fill: #0078D7;
     -fx-size: 30px;
 }
 
 .title_container Text {
-    -fx-fill: #FFFFFF;
-    -fx-font-size: 1.8em;
-    -fx-font-weight: bold;
+    -fx-font-size: 2.5em;
+    -fx-fill: #333333;
+    -fx-font-family: 'Arial', sans-serif;
     -fx-text-alignment: center;
 }
 
