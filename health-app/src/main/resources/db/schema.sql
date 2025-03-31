@@ -14,3 +14,8 @@ CREATE TABLE
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (trainerID) REFERENCES users (userID) ON DELETE SET NULL
     );
+CREATE TABLE
+    IF NOT EXISTS users (
+        user_id INTEGER,
+
+
