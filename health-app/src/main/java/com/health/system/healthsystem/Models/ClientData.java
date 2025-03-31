@@ -6,31 +6,33 @@ import java.sql.Date;
 public class ClientData {
     private final StringProperty username;
     private final StringProperty email;
-    private final StringProperty checkingAccount;
-    private final DoubleProperty checkingBalance;
-    private final StringProperty savingsAccount;
-    private final DoubleProperty savingsBalance;
+    private final DoubleProperty weight;
+    private final DoubleProperty height;
+    private double BMI=0;
+    private final ObjectProperty<Date> lastUpdate;
     private final ObjectProperty<Date> createdAt;
 
-    public ClientData(String username, String email, String checkingAccount, 
-                     double checkingBalance, String savingsAccount, 
-                     double savingsBalance, Date createdAt) {
+    public ClientData(String username, String email, double weight,
+                     double height, Date lastUpdate,
+                     Date createdAt) {
         this.username = new SimpleStringProperty(username);
         this.email = new SimpleStringProperty(email);
-        this.checkingAccount = new SimpleStringProperty(checkingAccount);
-        this.checkingBalance = new SimpleDoubleProperty(checkingBalance);
-        this.savingsAccount = new SimpleStringProperty(savingsAccount);
-        this.savingsBalance = new SimpleDoubleProperty(savingsBalance);
+        this.weight = new SimpleDoubleProperty(weight);
+        this.height = new SimpleDoubleProperty(height);
+        this.lastUpdate = new SimpleObjectProperty<>(lastUpdate);
         this.createdAt = new SimpleObjectProperty<>(createdAt);
     }
+    public void setBMI(){
+        double value =this.getWeight()/this.getHeight()/this.getHeight()*10000;
+        this.BMI=Math.round(value * 100.0) / 100.0;}
 
     // Getters
     public String getUsername() { return username.get(); }
     public String getEmail() { return email.get(); }
-    public String getCheckingAccount() { return checkingAccount.get(); }
-    public double getCheckingBalance() { return checkingBalance.get(); }
-    public String getSavingsAccount() { return savingsAccount.get(); }
-    public double getSavingsBalance() { return savingsBalance.get(); }
+    public double getWeight() { return weight.get(); }
+    public double getHeight() { return height.get(); }
+    public double getBMI() { return this.BMI; }
+    public Date getLastUpdate() { return lastUpdate.get(); }
     public Date getCreatedAt() { return createdAt.get(); }
 
 
@@ -39,9 +41,8 @@ public class ClientData {
     // Property getters
     public StringProperty usernameProperty() { return username; }
     public StringProperty emailProperty() { return email; }
-    public StringProperty checkingAccountProperty() { return checkingAccount; }
-    public DoubleProperty checkingBalanceProperty() { return checkingBalance; }
-    public StringProperty savingsAccountProperty() { return savingsAccount; }
-    public DoubleProperty savingsBalanceProperty() { return savingsBalance; }
+    public DoubleProperty weightProperty() { return weight; }
+    public DoubleProperty heightProperty() { return height; }
+    public ObjectProperty<Date> lastUpdateProperty() { return lastUpdate; }
     public ObjectProperty<Date> createdAtProperty() { return createdAt; }
 }

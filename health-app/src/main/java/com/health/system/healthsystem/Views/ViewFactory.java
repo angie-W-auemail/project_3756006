@@ -3,7 +3,7 @@ package com.health.system.healthsystem.Views;
 import com.health.system.healthsystem.HealthApplication;
 import com.health.system.healthsystem.Controllers.Admin.AdminController;
 import com.health.system.healthsystem.Controllers.Client.ClientController;
-import com.health.system.healthsystem.Controllers.Employee.EmployeeController;
+import com.health.system.healthsystem.Controllers.Employee.TrainerController;
 import com.health.system.healthsystem.cof.AppConfig;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -21,9 +21,8 @@ public class ViewFactory {
     private AnchorPane transactionsView;
     private AnchorPane accountsView;
     private AnchorPane profileView;
-    private AnchorPane createAccountView;  
     private AnchorPane clientsView;
-    private AnchorPane depositView;
+
 
     private AnchorPane accountRequestsView; 
 
@@ -34,8 +33,8 @@ public class ViewFactory {
     private AnchorPane addExerciseView;
 
 
-    // Employee
-    private final ObjectProperty<EmployeeMenuOptions> employeeSelectedMenuItem;
+    // Trainer
+    private final ObjectProperty<TrainerMenuOptions> TrainerSelectedMenuItem;
     // Admin
     private final ObjectProperty<AdminMenuOptions> adminSelectedMenuItem;
 
@@ -43,7 +42,7 @@ public class ViewFactory {
         this.signinAccountType = AccountType.Trainee;
         this.clientSelectedMenuItem = new SimpleObjectProperty<>();
         this.adminSelectedMenuItem = new SimpleObjectProperty<>();
-        this.employeeSelectedMenuItem = new SimpleObjectProperty<>();
+        this.TrainerSelectedMenuItem = new SimpleObjectProperty<>();
     }
 
     public AccountType getSigninAccountType() {
@@ -165,28 +164,6 @@ public class ViewFactory {
         return accountsView;
     }
 
-    public AnchorPane getCreateAccountView() {
-        if (createAccountView == null) {
-            try {
-                createAccountView = new FXMLLoader(getClass().getResource("/Fxml/Employee/CreateAccount.fxml")).load();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return createAccountView;
-    }
-    
-    public AnchorPane getDepositView() {
-        if (depositView == null) {
-            try {
-                depositView = new FXMLLoader(getClass().getResource("/Fxml/Employee/Deposit.fxml")).load();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return depositView;
-    }
-
     public void showSinginWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Signin.fxml"));
         createStage(loader);
@@ -206,10 +183,10 @@ public class ViewFactory {
         createStage(loader);
     }
 
-    public void showEmployeeWindow() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Employee/Employee.fxml"));
-        EmployeeController employeeController = new EmployeeController();
-        loader.setController(employeeController);
+    public void showTrainerWindow() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Employee/Trainer.fxml"));
+        TrainerController trainerController = new TrainerController();
+        loader.setController(trainerController);
         createStage(loader);
     }
 
@@ -218,9 +195,9 @@ public class ViewFactory {
         return adminSelectedMenuItem;
     }
 
-    // Employee
-    public ObjectProperty<EmployeeMenuOptions> getEmployeeSelectedMenuItem() {
-        return employeeSelectedMenuItem;
+    // Trainer
+    public ObjectProperty<TrainerMenuOptions> getTrainerSelectedMenuItem() {
+        return TrainerSelectedMenuItem;
     }
 
     private void createStage(FXMLLoader loader) {
@@ -278,14 +255,23 @@ public class ViewFactory {
         this.addExerciseView = view;
     }
 
-    public void setCreateAccountView(AnchorPane createAccountView) {
-        this.createAccountView = createAccountView;
+    public void setAddFoodView(AnchorPane view) {
+        this.addFoodView = view;
     }
+
+    public void setAddWaterView(AnchorPane view) {
+        this.addWaterView = view;
+    }
+
+    public void setAddExerciseView(AnchorPane view) {
+        this.addExerciseView = view;
+    }
+
 
     public AnchorPane getClientsView() {
         if (clientsView == null) {
             try {
-                clientsView = new FXMLLoader(getClass().getResource("/Fxml/Employee/Clients.fxml")).load();
+                clientsView = new FXMLLoader(getClass().getResource("/Fxml/Trainer/Clients.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -297,7 +283,4 @@ public class ViewFactory {
         this.clientsView = view;
     }
 
-    public void setDepositView(AnchorPane view) {
-        this.depositView = view;
-    }
 }
