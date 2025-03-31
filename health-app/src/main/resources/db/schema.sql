@@ -17,7 +17,7 @@ CREATE TABLE
 CREATE TABLE
     IF NOT EXISTS activities (
         user_id INTEGER,
-        activity VARCHAR(20) NOT NULL, --"water", "food", "excercise"
+        activity VARCHAR(20) NOT NULL, --"water", "food", "exercise"
         calorie INTEGER, -- amount of calorie
         waterintake INTEGER, -- grams of waterintake
         trainee_weight DECIMAL(5, 2), --weight taken after activity, will also need to update in users
