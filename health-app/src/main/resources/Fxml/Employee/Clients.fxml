@@ -26,20 +26,16 @@
         <!-- Clients Table -->
         <TableView fx:id="clientsTable" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="usernameCol" text="Username"/>
-                <TableColumn fx:id="emailCol" text="Email"/>
-                <TableColumn fx:id="checkingAccCol" text="Checking Account"/>
-                <TableColumn fx:id="checkingBalCol" text="Checking Balance"/>
-                <TableColumn fx:id="savingsAccCol" text="Savings Account"/>
-                <TableColumn fx:id="savingsBalCol" text="Savings Balance"/>
-                <TableColumn fx:id="createdAtCol" text="Created Date"/>
+                <TableColumn fx:id="usernameCol" text="Username" prefWidth="120"/>
+                <TableColumn fx:id="emailCol" text="Email" prefWidth="100"/>
+                <TableColumn fx:id="weightCol" text="Weight"/>
+                <TableColumn fx:id="heightCol" text="Height"/>
+                <TableColumn fx:id="BMICol" text="BNI"/>
+                <TableColumn fx:id="lastCol" text="Last Update" prefWidth="100"/>
+                <TableColumn fx:id="createdAtCol" text="Created Date" prefWidth="100"/>
+                <TableColumn fx:id="dashboardCol" text="Dashboard" />
             </columns>
         </TableView>
-        
-        <!-- Client Details Section -->
-        <VBox spacing="10" styleClass="details-section">
-            <Label text="Transaction History" styleClass="section-header"/>
-            <ListView fx:id="transactionList" prefHeight="200"/>
-        </VBox>
+
     </VBox>
 </AnchorPane>

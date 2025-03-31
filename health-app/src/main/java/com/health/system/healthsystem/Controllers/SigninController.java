@@ -66,7 +66,7 @@ public class SigninController implements Initializable {
                     Model.getInstance().getViewFactory().showClientWindow();
                     break;
                 case Trainer:
-                    Model.getInstance().getViewFactory().showEmployeeWindow();
+                    Model.getInstance().getViewFactory().showTrainerWindow();
                     break;
                 case ADMIN:
                     Model.getInstance().getViewFactory().showAdminWindow();
