@@ -40,6 +40,10 @@ public class ClientController implements Initializable {
                     Model.getInstance().getViewFactory().setDashboardView(null);
                     client_parent.setCenter(Model.getInstance().getViewFactory().getDashboardView());
                 }
+                case CLIENTS -> {
+                    Model.getInstance().getViewFactory().setDashboardView(null);
+                    client_parent.setCenter(Model.getInstance().getViewFactory().getDashboardView());
+                }
                 case ACCOUNTS -> {
                     Model.getInstance().getViewFactory().setAccountsView(null);
                     client_parent.setCenter(Model.getInstance().getViewFactory().getAccountsView());

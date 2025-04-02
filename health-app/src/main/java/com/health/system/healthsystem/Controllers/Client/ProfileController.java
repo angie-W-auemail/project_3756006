@@ -93,11 +93,12 @@ public class ProfileController implements Initializable {
     @FXML
     private void handleUpdateDetails() {
         String newUsername = usernameField.getText().trim();
-        String weight = weight_fld.getText().trim();
-        String height = height_fld.getText().trim();
+        String weight = weight_fld.getText();
+        String height = height_fld.getText();
         String gender = male_radio.isSelected() ? "Male" : "Female";
         String trainer = trainerNameToId.get(trainer_selector.getValue());
-        int id = Integer.parseInt(trainer);
+        int id = 0;
+        if(trainer!=null){id = Integer.parseInt(trainer);}
 
         
         if (newUsername.isEmpty()) {
