@@ -7,12 +7,15 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class ProfileController implements Initializable {
@@ -29,6 +32,8 @@ public class ProfileController implements Initializable {
     @FXML private RadioButton female_radio;
     @FXML private ToggleGroup genderGroup;
     @FXML private ComboBox<String> trainer_selector;
+    private Map<String, String> trainers = new HashMap<>(); // list of all trainers
+    private Map<String, String> trainerNameToId = new HashMap<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -38,7 +43,7 @@ public class ProfileController implements Initializable {
     private void loadUserData() {
         try (Connection conn = DatabaseConnection.connect()) {
             String sql = "SELECT username, email, weight, height, gender,  trainerID, role FROM users WHERE email = ?";
-            String sql_trainers = "SELECT email from users where role = 'Trainer'";
+            String sql_trainers = "SELECT username, user_id from users where role = 'Trainer'";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             PreparedStatement tstmt = conn.prepareStatement(sql_trainers);
             pstmt.setString(1, Model.getInstance().getCurrentUserEmail());
@@ -46,7 +51,7 @@ public class ProfileController implements Initializable {
             ResultSet ts=tstmt.executeQuery();
 
             if (rs.next()) {
-
+                String trainer_selected  = rs.getString("trainerID");
                 usernameField.setText(rs.getString("username"));
                 emailField.setText(rs.getString("email"));
                 role_fld.setText(rs.getString("role"));
@@ -61,11 +66,23 @@ public class ProfileController implements Initializable {
                 else{
                     female_radio.setSelected(true);
                 }
-                ObservableList<String> trainers = FXCollections.observableArrayList();
+
+
+
                 while (ts.next()) {
-                    trainers.add(ts.getString("username"));
+                    String username = ts.getString("username");
+                    String userId = ts.getString("user_id");
+                    trainers.put(userId, username);
+                    trainerNameToId.put(username, userId);
+                    trainer_selector.getItems().add(username);
                 }
-                trainer_selector.setItems(trainers);
+                if(trainer_selected!=null){
+                    trainer_selector.setValue(trainers.get(trainer_selected));
+                }
+
+
+
+
 
             }
         } catch (SQLException e) {
@@ -76,6 +93,12 @@ public class ProfileController implements Initializable {
     @FXML
     private void handleUpdateDetails() {
         String newUsername = usernameField.getText().trim();
+        String weight = weight_fld.getText().trim();
+        String height = height_fld.getText().trim();
+        String gender = male_radio.isSelected() ? "Male" : "Female";
+        String trainer = trainerNameToId.get(trainer_selector.getValue());
+        int id = Integer.parseInt(trainer);
+
         
         if (newUsername.isEmpty()) {
             showMessage("Username cannot be empty", false);
@@ -83,10 +106,15 @@ public class ProfileController implements Initializable {
         }
 
         try (Connection conn = DatabaseConnection.connect()) {
-            String sql = "UPDATE users SET username = ? WHERE email = ?";
+            String sql = "UPDATE users SET username = ? , weight = ?, height = ?, gender = ?, trainerID=? WHERE email = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, newUsername);
-            pstmt.setString(2, Model.getInstance().getCurrentUserEmail());
+            pstmt.setString(6, Model.getInstance().getCurrentUserEmail());
+            pstmt.setString(2, weight);
+            pstmt.setString(3, height);
+            pstmt.setString(4, gender);
+            pstmt.setInt(5, id);
+
             pstmt.executeUpdate();
             
             showMessage("Profile updated successfully", true);
