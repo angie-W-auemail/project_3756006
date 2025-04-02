@@ -49,6 +49,8 @@ public class ViewFactory {
         this.signinAccountType = signinAccountType;
     }
 
+    //public ObjectProperty<TrainerMenuOptions> getTrainerSelectedMenuItem() {return TrainerSelectedMenuItem;}
+
     public ObjectProperty<ClientMenuOptions> getClientSelectedMenuItem() {
         return clientSelectedMenuItem;
     }
@@ -209,7 +211,7 @@ public class ViewFactory {
     public AnchorPane getClientsView() {
         if (clientsView == null) {
             try {
-                clientsView = new FXMLLoader(getClass().getResource("/Fxml/Trainer/Clients.fxml")).load();
+                clientsView = new FXMLLoader(getClass().getResource("/Fxml/Employee/Clients.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }
