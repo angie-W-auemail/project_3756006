@@ -27,8 +27,12 @@ public class ViewFactory {
 
     private AnchorPane accountRequestsView; 
 
-
     private AnchorPane reportsView;
+
+    private AnchorPane addFoodView;
+    private AnchorPane addWaterView;
+    private AnchorPane addExerciseView;
+
 
     // Employee
     private final ObjectProperty<EmployeeMenuOptions> employeeSelectedMenuItem;
@@ -53,6 +57,7 @@ public class ViewFactory {
     public ObjectProperty<ClientMenuOptions> getClientSelectedMenuItem() {
         return clientSelectedMenuItem;
     }
+
     public AnchorPane getProfileView() {
         if (profileView == null) {
             try {
@@ -62,6 +67,39 @@ public class ViewFactory {
             }
         }
         return profileView;
+    }
+
+    public AnchorPane getAddFoodView() {
+        if (addFoodView == null) {
+            try {
+                addFoodView = new FXMLLoader(getClass().getResource("/Fxml/Client/AddFood.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return addFoodView;
+    }
+
+    public AnchorPane getAddWaterView() {
+        if (addWaterView == null) {
+            try {
+                addWaterView = new FXMLLoader(getClass().getResource("/Fxml/Client/AddWater.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return addWaterView;
+    }
+
+    public AnchorPane getAddExerciseView() {
+        if (addExerciseView == null) {
+            try {
+                addExerciseView = new FXMLLoader(getClass().getResource("/Fxml/Client/AddExercise.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return addExerciseView;
     }
     
     public AnchorPane getManageUsersView() {
@@ -226,6 +264,18 @@ public class ViewFactory {
 
     public void setProfileView(AnchorPane view) {
         this.profileView = view;
+    }
+
+    public void setAddFoodView(AnchorPane view) {
+        this.addFoodView = view;
+    }
+
+    public void setAddWaterView(AnchorPane view) {
+        this.addWaterView = view;
+    }
+
+    public void setAddExerciseView(AnchorPane view) {
+        this.addExerciseView = view;
     }
 
     public void setCreateAccountView(AnchorPane createAccountView) {

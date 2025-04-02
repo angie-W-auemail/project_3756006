@@ -27,7 +27,7 @@
             </graphic>
          </Button>
          <Line endX="120.0" layoutX="30.0" layoutY="261.0" />
-         <Button fx:id="transaction_btn" mnemonicParsing="false" prefHeight="49.0" prefWidth="211.0" text="Add Exercise">
+         <Button fx:id="exercise_btn" mnemonicParsing="false" prefHeight="49.0" prefWidth="211.0" text="Add Exercise">
             <graphic>
                <FontAwesomeIconView glyphName="PLUS" size="20" />
             </graphic>
@@ -35,12 +35,12 @@
                <Font size="10.0" />
             </font>
          </Button>
-         <Button fx:id="accounts_btn" mnemonicParsing="false" text="Add Food">
+         <Button fx:id="food_btn" mnemonicParsing="false" text="Add Food">
             <graphic>
                <FontAwesomeIconView glyphName="PLUS" size="20" />
             </graphic>
          </Button>
-         <Button fx:id="accounts_btn1" layoutX="19.0" layoutY="185.0" mnemonicParsing="false" text="Add Water">
+         <Button fx:id="water_btn" layoutX="19.0" layoutY="185.0" mnemonicParsing="false" text="Add Water">
             <graphic>
                <FontAwesomeIconView glyphName="PLUS" size="20" />
             </graphic>

@@ -20,6 +20,18 @@ public class ClientController implements Initializable {
                     Model.getInstance().getViewFactory().setProfileView(null);
                     client_parent.setCenter(Model.getInstance().getViewFactory().getProfileView());
                 }
+                case ADDFOOD -> {
+                    Model.getInstance().getViewFactory().setAddFoodView(null);
+                    client_parent.setCenter(Model.getInstance().getViewFactory().getAddFoodView());
+                }
+                case ADDWATER -> {
+                    Model.getInstance().getViewFactory().setAddWaterView(null);
+                    client_parent.setCenter(Model.getInstance().getViewFactory().getAddWaterView());
+                }
+                case ADDEXERCISE -> {
+                    Model.getInstance().getViewFactory().setAddExerciseView(null);
+                    client_parent.setCenter(Model.getInstance().getViewFactory().getAddExerciseView());
+                }
                 case TRANSACTIONS -> {
                     Model.getInstance().getViewFactory().setTransactionsView(null);
                     client_parent.setCenter(Model.getInstance().getViewFactory().getTransactionsView());

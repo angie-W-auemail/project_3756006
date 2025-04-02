@@ -112,6 +112,7 @@ public class SignupController implements Initializable {
     private int insertUser(Connection conn, String email, String password, String username, AccountType accountType)
             throws SQLException {
         String sql = "INSERT INTO users (email, password, username, role, gender, created_at) VALUES (?, ?, ?, ?, ?, datetime('now'))";
+        String sqlA = "INSERT INTO activities (user_id, activity, calorie, waterintake, duration) VALUES (?, ?, 0, 0, 0)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, email);
             pstmt.setString(2, password);
@@ -128,8 +129,13 @@ public class SignupController implements Initializable {
 
             ResultSet rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
+                PreparedStatement pstmtA = conn.prepareStatement(sqlA);
+                pstmtA.setInt(1, rs.getInt(1));
+                pstmtA.setString(2, "activities");
+                pstmtA.executeUpdate();
                 return rs.getInt(1);
             }
+
             throw new SQLException("create user failed, no ID obtained");
         }
     }

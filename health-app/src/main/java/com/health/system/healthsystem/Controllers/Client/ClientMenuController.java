@@ -12,8 +12,9 @@ import java.util.ResourceBundle;
 
 public class ClientMenuController implements Initializable {
     public Button dashboard_btn;
-    public Button transaction_btn;
-    public Button accounts_btn;
+    public Button water_btn;
+    public Button food_btn;
+    public Button exercise_btn;
     public Button profile_btn;
     public Button logout_btn;
     //public Button report_btn;
@@ -27,11 +28,14 @@ public class ClientMenuController implements Initializable {
         dashboard_btn.setOnAction(e -> {
             onDashboard();
         });
-        transaction_btn.setOnAction(e -> {
-            onTransactions();
+        water_btn.setOnAction(e -> {
+            onWater();
         });
-        accounts_btn.setOnAction(e -> {
-            onAccounts();
+        food_btn.setOnAction(e -> {
+            onFood();
+        });
+        exercise_btn.setOnAction(e -> {
+            onExercise();
         });
         profile_btn.setOnAction(e -> {
             onProfile();
@@ -48,14 +52,19 @@ public class ClientMenuController implements Initializable {
         Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.PROFILE);
     }
 
-    private void onTransactions() {
-        System.out.println("Transactions");
-        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.TRANSACTIONS);
+    private void onWater() {
+        System.out.println("Add water");
+        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.ADDWATER);
     }
 
-    private void onAccounts() {
-        System.out.println("Accounts");
-        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.ACCOUNTS);
+    private void onFood() {
+        System.out.println("Add food");
+        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.ADDFOOD);
+    }
+
+    private void onExercise() {
+        System.out.println("Add exercise");
+        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.ADDEXERCISE);
     }
 
     @FXML
