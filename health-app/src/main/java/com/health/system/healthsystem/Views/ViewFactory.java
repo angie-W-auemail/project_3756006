@@ -43,7 +43,6 @@ public class ViewFactory {
         this.clientSelectedMenuItem = new SimpleObjectProperty<>();
         this.adminSelectedMenuItem = new SimpleObjectProperty<>();
         this.TrainerSelectedMenuItem = new SimpleObjectProperty<>();
-        this.TrainerSelectedMenuItem = new SimpleObjectProperty<>();
     }
 
     public AccountType getSigninAccountType() {
