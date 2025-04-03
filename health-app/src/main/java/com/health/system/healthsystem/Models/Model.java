@@ -6,6 +6,7 @@ public class Model {
     private static Model model;
     private final ViewFactory viewFactory;
     private String currentUserEmail;
+    private ClientData currentClient;
 
     private Model() {
         this.viewFactory = new ViewFactory();
@@ -27,4 +28,6 @@ public class Model {
     public void setCurrentUserEmail(String email) {
         this.currentUserEmail = email;
     }
+    public void setCurrentClient(ClientData client) {this.currentClient = client;}
+    public ClientData getCurrentClient() {return this.currentClient;}
 }

@@ -19,6 +19,10 @@ public class TrainerController implements Initializable {
                     Model.getInstance().getViewFactory().setProfileView(null);
                     client_parent.setCenter(Model.getInstance().getViewFactory().getProfileView());
                 }
+                case SUMMARY -> {
+                    Model.getInstance().getViewFactory().setSummaryView(null);
+                    client_parent.setCenter(Model.getInstance().getViewFactory().getSummaryView());
+                }
                 case CLIENTS -> {
                     Model.getInstance().getViewFactory().setClientsView(null);
                     client_parent.setCenter(Model.getInstance().getViewFactory().getClientsView());

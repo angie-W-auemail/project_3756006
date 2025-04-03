@@ -1,5 +1,7 @@
 package com.health.system.healthsystem.Controllers.Employee;
 
+import com.health.system.healthsystem.Views.ClientMenuOptions;
+import com.health.system.healthsystem.Views.TrainerMenuOptions;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -9,10 +11,13 @@ import javafx.collections.ObservableList;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
+
+import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 import com.health.system.healthsystem.Models.DatabaseConnection;
 import com.health.system.healthsystem.Models.ClientData;
 import com.health.system.healthsystem.Models.Model;
+
 
 public class ClientsController implements Initializable {
     @FXML
@@ -39,7 +44,7 @@ public class ClientsController implements Initializable {
     private TableColumn<ClientData, Void> dashboardCol;
 //    @FXML
 //    private ListView<String> transactionList;
-
+    public BorderPane client_parent;
     private ObservableList<ClientData> clientsList = FXCollections.observableArrayList();
 
     @Override
@@ -70,7 +75,11 @@ public class ClientsController implements Initializable {
                     private final Button btn = new Button("Dashboard");
 
                     {
-                       // btn.setOnAction(event -> );
+                        btn.setOnAction(event -> {
+                            ClientData client = getTableView().getItems().get(getIndex());
+                            Model.getInstance().setCurrentClient(client);
+                            handleSummaryButton();
+                        });
                     }
 
                     @Override
@@ -85,6 +94,10 @@ public class ClientsController implements Initializable {
                 };
             }
         });
+    }
+
+    public void handleSummaryButton() {
+        Model.getInstance().getViewFactory().getTrainerSelectedMenuItem().set(TrainerMenuOptions.SUMMARY);
     }
 
     private void loadClients() {

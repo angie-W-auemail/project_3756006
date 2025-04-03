@@ -26,6 +26,15 @@ CREATE TABLE
         PRIMARY KEY (user_id, input_datetime),
         FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE SET NULL
     );
+CREATE TABLE
+    IF NOT EXISTS comment (
+        user_id INTEGER,
+        trainer_id INTEGER,
+        comment VARCHAR(200),
+    PRIMARY KEY (user_id, trainer_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE SET NULL
+    FOREIGN KEY (trainer_id) REFERENCES users (user_id) ON DELETE SET NULL
+    );
 
 
 
