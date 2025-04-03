@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminMenuController implements Initializable {
-    
+
     @FXML
     private Button create_client_btn;
     @FXML
@@ -34,6 +34,9 @@ public class AdminMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Make the buttons invisible
+        generate_reports_btn.setVisible(false);
+        approve_requests_btn.setVisible(false);
         addListeners();
     }
 

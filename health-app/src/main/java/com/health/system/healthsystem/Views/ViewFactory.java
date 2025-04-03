@@ -26,8 +26,12 @@ public class ViewFactory {
 
     private AnchorPane accountRequestsView; 
 
-
     private AnchorPane reportsView;
+
+    private AnchorPane addFoodView;
+    private AnchorPane addWaterView;
+    private AnchorPane addExerciseView;
+
 
     // Trainer
     private final ObjectProperty<TrainerMenuOptions> TrainerSelectedMenuItem;
@@ -39,6 +43,7 @@ public class ViewFactory {
         this.clientSelectedMenuItem = new SimpleObjectProperty<>();
         this.adminSelectedMenuItem = new SimpleObjectProperty<>();
         this.TrainerSelectedMenuItem = new SimpleObjectProperty<>();
+        this.TrainerSelectedMenuItem = new SimpleObjectProperty<>();
     }
 
     public AccountType getSigninAccountType() {
@@ -49,9 +54,12 @@ public class ViewFactory {
         this.signinAccountType = signinAccountType;
     }
 
+    //public ObjectProperty<TrainerMenuOptions> getTrainerSelectedMenuItem() {return TrainerSelectedMenuItem;}
+
     public ObjectProperty<ClientMenuOptions> getClientSelectedMenuItem() {
         return clientSelectedMenuItem;
     }
+
     public AnchorPane getProfileView() {
         if (profileView == null) {
             try {
@@ -61,6 +69,39 @@ public class ViewFactory {
             }
         }
         return profileView;
+    }
+
+    public AnchorPane getAddFoodView() {
+        if (addFoodView == null) {
+            try {
+                addFoodView = new FXMLLoader(getClass().getResource("/Fxml/Client/AddFood.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return addFoodView;
+    }
+
+    public AnchorPane getAddWaterView() {
+        if (addWaterView == null) {
+            try {
+                addWaterView = new FXMLLoader(getClass().getResource("/Fxml/Client/AddWater.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return addWaterView;
+    }
+
+    public AnchorPane getAddExerciseView() {
+        if (addExerciseView == null) {
+            try {
+                addExerciseView = new FXMLLoader(getClass().getResource("/Fxml/Client/AddExercise.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return addExerciseView;
     }
     
     public AnchorPane getManageUsersView() {
@@ -205,6 +246,17 @@ public class ViewFactory {
         this.profileView = view;
     }
 
+    public void setAddFoodView(AnchorPane view) {
+        this.addFoodView = view;
+    }
+
+    public void setAddWaterView(AnchorPane view) {
+        this.addWaterView = view;
+    }
+
+    public void setAddExerciseView(AnchorPane view) {
+        this.addExerciseView = view;
+    }
 
     public AnchorPane getClientsView() {
         if (clientsView == null) {
