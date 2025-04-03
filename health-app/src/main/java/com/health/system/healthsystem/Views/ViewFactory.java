@@ -31,6 +31,7 @@ public class ViewFactory {
     private AnchorPane addFoodView;
     private AnchorPane addWaterView;
     private AnchorPane addExerciseView;
+    private AnchorPane summaryView;
 
 
     // Trainer
@@ -172,7 +173,7 @@ public class ViewFactory {
     }
 
     public void showClientWindow() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Employee/Clients.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Client/Client.fxml"));
         ClientController clientController = new ClientController();
         loader.setController(clientController);
         createStage(loader);
@@ -267,9 +268,26 @@ public class ViewFactory {
         }
         return clientsView;
     }
-    
     public void setClientsView(AnchorPane view) {
         this.clientsView = view;
     }
+    
+    public void setSummaryView(AnchorPane view) {
+        this.summaryView = view;
+    }
+
+    public AnchorPane getSummaryView() {
+        if (summaryView == null) {
+            try {
+                summaryView = new FXMLLoader(getClass().getResource("/Fxml/Employee/Summary.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return summaryView;
+    }
+
+
+
 
 }
