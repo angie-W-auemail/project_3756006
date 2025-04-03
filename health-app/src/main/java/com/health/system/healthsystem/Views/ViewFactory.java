@@ -172,7 +172,7 @@ public class ViewFactory {
     }
 
     public void showClientWindow() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Client/Client.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Employee/Clients.fxml"));
         ClientController clientController = new ClientController();
         loader.setController(clientController);
         createStage(loader);
@@ -260,7 +260,7 @@ public class ViewFactory {
     public AnchorPane getClientsView() {
         if (clientsView == null) {
             try {
-                clientsView = new FXMLLoader(getClass().getResource("/Fxml/Trainer/Clients.fxml")).load();
+                clientsView = new FXMLLoader(getClass().getResource("/Fxml/Employee/Clients.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -4,21 +4,43 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3ab2bb1-f108-47f4-97fb-f6a328ac344e" name="Changes" comment="" />
+    <list default="true" id="e3ab2bb1-f108-47f4-97fb-f6a328ac344e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/health-app/src/main/java/com/health/system/healthsystem/Controllers/Client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/health-app/src/main/java/com/health/system/healthsystem/Controllers/Client/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/health-app/src/main/java/com/health/system/healthsystem/Views/ClientMenuOptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/health-app/src/main/java/com/health/system/healthsystem/Views/ClientMenuOptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/health-app/src/main/java/com/health/system/healthsystem/Views/ViewFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/health-app/src/main/java/com/health/system/healthsystem/Views/ViewFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/health_system.db" beforeDir="false" afterPath="$PROJECT_DIR$/health_system.db" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "angie-W-auemail"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/angie-W-auemail/project_3756006.git",
+    "accountId": "bac3c0d6-3536-4395-8515-9a545869f86a"
+  }
+}]]></component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2v9NK9SDA11F99VN4Qlx4x73E95" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -29,9 +51,10 @@
     "Application.HealthApplication.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "dev0.6__summary__base__master__angie",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/fanghaomeng/Desktop/project_3756006",
+    "last_opened_file_path": "U:/REPO/cosc3756/0403/project_3756006",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -43,7 +66,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-322ed176" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
@@ -56,10 +80,22 @@
       <option name="presentableId" value="Default" />
       <updated>1743553265528</updated>
       <workItem from="1743553266733" duration="674000" />
+      <workItem from="1743706391872" duration="686000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

@@ -7,5 +7,6 @@ public enum ClientMenuOptions {
     ADDFOOD,
     ADDWATER,
     ADDEXERCISE,
+    CLIENTS,
     PROFILE
 }
