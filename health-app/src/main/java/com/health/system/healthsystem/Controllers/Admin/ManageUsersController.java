@@ -54,23 +54,11 @@ public class ManageUsersController implements Initializable {
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
         roleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
-                TableColumn<UserData, Boolean> plusCol = new TableColumn<>("Plus");
-        plusCol.setCellValueFactory(new PropertyValueFactory<>("isPlus"));
-        plusCol.setCellFactory(tc -> new TableCell<>() {
-            @Override
-            protected void updateItem(Boolean item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item ? "Yes" : "No");
-                }
-            }
-        });
-        usersTable.getColumns().add(plusCol);
-    
+        
+        // Remove the plus column completely
         setupActionsColumn();
     }
+
     private void setupActionsColumn() {
         actionsCol.setCellFactory(column -> new TableCell<>() {
             private final Button editButton = new Button("  edit");
@@ -104,7 +92,7 @@ public class ManageUsersController implements Initializable {
     private void loadUsers() {
         usersList.clear();
         try (Connection conn = DatabaseConnection.connect()) {
-            String sql = "SELECT * FROM users WHERE role != 'ADMIN'";
+            String sql = "SELECT * FROM users WHERE role != 'Admin'";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
@@ -114,8 +102,7 @@ public class ManageUsersController implements Initializable {
                         rs.getString("username"),
                         rs.getString("email"),
                         rs.getString("role"),
-                        rs.getBoolean("is_plus")));
-                        
+                        false)); // Default value or remove this parameter if possible
             }
             usersTable.setItems(usersList);
         } catch (SQLException e) {
@@ -125,7 +112,7 @@ public class ManageUsersController implements Initializable {
 
     private void showAddUserDialog() {
         Dialog<UserData> dialog = new Dialog<>();
-        dialog.setTitle("add new user");
+        dialog.setTitle("Add New User");
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -135,16 +122,23 @@ public class ManageUsersController implements Initializable {
         TextField email = new TextField();
         PasswordField password = new PasswordField();
         ComboBox<String> role = new ComboBox<>();
-        role.getItems().addAll("CLIENT", "EMPLOYEE");
+        role.getItems().addAll("TRAINEE", "TRAINER");
+        
+        // Add gender selection
+        ComboBox<String> gender = new ComboBox<>();
+        gender.getItems().addAll("Male", "Female");
+        gender.setValue("Male"); // Default value
 
-        grid.add(new Label("username:"), 0, 0);
+        grid.add(new Label("Username:"), 0, 0);
         grid.add(username, 1, 0);
-        grid.add(new Label("email:"), 0, 1);
+        grid.add(new Label("Email:"), 0, 1);
         grid.add(email, 1, 1);
-        grid.add(new Label("password:"), 0, 2);
+        grid.add(new Label("Password:"), 0, 2);
         grid.add(password, 1, 2);
-        grid.add(new Label("role:"), 0, 3);
+        grid.add(new Label("Role:"), 0, 3);
         grid.add(role, 1, 3);
+        grid.add(new Label("Gender:"), 0, 4);
+        grid.add(gender, 1, 4);
 
         dialog.getDialogPane().setContent(grid);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -152,16 +146,25 @@ public class ManageUsersController implements Initializable {
         dialog.setResultConverter(buttonType -> {
             if (buttonType == ButtonType.OK) {
                 try (Connection conn = DatabaseConnection.connect()) {
-                    String sql = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
+                    // Updated SQL query to include gender
+                    String sql = "INSERT INTO users (username, email, password, role, gender, weight, height) VALUES (?, ?, ?, ?, ?, 0, 0)";
                     PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                     stmt.setString(1, username.getText());
                     stmt.setString(2, email.getText());
                     stmt.setString(3, password.getText());
                     stmt.setString(4, role.getValue());
+                    stmt.setString(5, gender.getValue());
+                    
                     stmt.executeUpdate();
 
                     ResultSet rs = stmt.getGeneratedKeys();
                     if (rs.next()) {
+                        // Create activities record for the new user
+                        String activitySql = "INSERT INTO activities (user_id, activity, calorie, waterintake, duration) VALUES (?, 'activities', 0, 0, 0)";
+                        PreparedStatement activityStmt = conn.prepareStatement(activitySql);
+                        activityStmt.setInt(1, rs.getInt(1));
+                        activityStmt.executeUpdate();
+                        
                         return new UserData(
                                 rs.getInt(1),
                                 username.getText(),
@@ -228,7 +231,7 @@ public class ManageUsersController implements Initializable {
     }
 
     private void setupFilters() {
-        userTypeFilter.getItems().addAll("ALL", "CLIENT", "EMPLOYEE");
+        userTypeFilter.getItems().addAll("ALL", "TRAINEE", "TRAINER"); // Updated role names
         userTypeFilter.setValue("ALL");
     }
     private void showEditUserDialog(UserData user) {
@@ -243,15 +246,27 @@ public class ManageUsersController implements Initializable {
         TextField email = new TextField(user.getEmail());
         PasswordField password = new PasswordField();
         ComboBox<String> role = new ComboBox<>();
-        role.getItems().addAll("CLIENT", "EMPLOYEE");
+        role.getItems().addAll("TRAINEE", "TRAINER"); // Updated role names
         role.setValue(user.getRole());
         
-        CheckBox isPlus = new CheckBox("Employee Plus");
-        isPlus.setSelected(user.getIsPlus());
-
-        isPlus.disableProperty().bind(
-            role.valueProperty().isNotEqualTo("EMPLOYEE")
-        );
+        // Add gender dropdown
+        ComboBox<String> gender = new ComboBox<>();
+        gender.getItems().addAll("Male", "Female");
+        
+        // Get the user's current gender
+        try (Connection conn = DatabaseConnection.connect()) {
+            String genderSql = "SELECT gender FROM users WHERE user_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(genderSql);
+            stmt.setInt(1, user.getId());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                gender.setValue(rs.getString("gender"));
+            } else {
+                gender.setValue("Male");
+            }
+        } catch (SQLException e) {
+            gender.setValue("Male");
+        }
     
         grid.add(new Label("Username:"), 0, 0);
         grid.add(username, 1, 0);
@@ -261,8 +276,8 @@ public class ManageUsersController implements Initializable {
         grid.add(password, 1, 2);
         grid.add(new Label("Role:"), 0, 3);
         grid.add(role, 1, 3);
-        grid.add(new Label("Permission:"), 0, 4);
-        grid.add(isPlus, 1, 4);
+        grid.add(new Label("Gender:"), 0, 4);
+        grid.add(gender, 1, 4);
     
         dialog.getDialogPane().setContent(grid);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -274,21 +289,21 @@ public class ManageUsersController implements Initializable {
                     PreparedStatement stmt;
     
                     if (password.getText().isEmpty()) {
-                        sql = "UPDATE users SET username = ?, email = ?, role = ?, is_plus = ? WHERE user_id = ?";
+                        sql = "UPDATE users SET username = ?, email = ?, role = ?, gender = ? WHERE user_id = ?";
                         stmt = conn.prepareStatement(sql);
                         stmt.setString(1, username.getText());
                         stmt.setString(2, email.getText());
                         stmt.setString(3, role.getValue());
-                        stmt.setBoolean(4, isPlus.isSelected());
+                        stmt.setString(4, gender.getValue());
                         stmt.setInt(5, user.getId());
                     } else {
-                        sql = "UPDATE users SET username = ?, email = ?, password = ?, role = ?, is_plus = ? WHERE user_id = ?";
+                        sql = "UPDATE users SET username = ?, email = ?, password = ?, role = ?, gender = ? WHERE user_id = ?";
                         stmt = conn.prepareStatement(sql);
                         stmt.setString(1, username.getText());
                         stmt.setString(2, email.getText());
                         stmt.setString(3, password.getText());
                         stmt.setString(4, role.getValue());
-                        stmt.setBoolean(5, isPlus.isSelected());
+                        stmt.setString(5, gender.getValue());
                         stmt.setInt(6, user.getId());
                     }
     
@@ -299,7 +314,7 @@ public class ManageUsersController implements Initializable {
                                 username.getText(),
                                 email.getText(),
                                 role.getValue(),
-                                isPlus.isSelected());
+                                false); // Default value or modify UserData class
                     }
                 } catch (SQLException e) {
                     showError("Failed to update user: " + e.getMessage());

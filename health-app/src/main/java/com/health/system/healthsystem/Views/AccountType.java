@@ -1,7 +1,7 @@
 package com.health.system.healthsystem.Views;
 
 public enum AccountType {
-    ADMIN,
+    Admin,
     Trainer,
     Trainee,
 

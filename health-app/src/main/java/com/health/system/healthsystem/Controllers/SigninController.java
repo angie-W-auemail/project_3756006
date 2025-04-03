@@ -34,7 +34,7 @@ public class SigninController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         account_selector.setItems(
-                FXCollections.observableArrayList(AccountType.Trainee, AccountType.ADMIN, AccountType.Trainer));
+                FXCollections.observableArrayList(AccountType.Trainee, AccountType.Admin, AccountType.Trainer));
         account_selector.setValue(Model.getInstance().getViewFactory().getSigninAccountType());
         account_selector.valueProperty().addListener(
                 (observable -> Model.getInstance().getViewFactory().setSigninAccountType(account_selector.getValue())));
@@ -68,7 +68,7 @@ public class SigninController implements Initializable {
                 case Trainer:
                     Model.getInstance().getViewFactory().showTrainerWindow();
                     break;
-                case ADMIN:
+                case Admin:
                     Model.getInstance().getViewFactory().showAdminWindow();
                     break;
             }

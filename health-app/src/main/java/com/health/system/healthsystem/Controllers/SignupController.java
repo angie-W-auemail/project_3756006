@@ -39,7 +39,7 @@ public class SignupController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        account_selector.getItems().addAll(AccountType.Trainee, AccountType.ADMIN, AccountType.Trainer);
+        account_selector.getItems().addAll(AccountType.Trainee, AccountType.Admin, AccountType.Trainer);
         account_selector.setValue(AccountType.Trainee);
 
         if (gender_selector != null) {

@@ -257,19 +257,6 @@ public class ViewFactory {
         this.addExerciseView = view;
     }
 
-    public void setAddFoodView(AnchorPane view) {
-        this.addFoodView = view;
-    }
-
-    public void setAddWaterView(AnchorPane view) {
-        this.addWaterView = view;
-    }
-
-    public void setAddExerciseView(AnchorPane view) {
-        this.addExerciseView = view;
-    }
-
-
     public AnchorPane getClientsView() {
         if (clientsView == null) {
             try {
